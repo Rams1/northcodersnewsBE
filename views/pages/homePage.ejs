@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+  <title>NorthCoders News</title>
+  
+</head>
+<body>
+  <div class="topics">
+      <H1 class="mainHeader">
+        <a class="north">NorthCoder</a> News
+      </H1>
+      <h1>
+        API Endpoints
+      </h1>
+      <h1>
+        GET 
+        <code>/api/topics</code>
+      </h1>
+      <p>
+        Gets all topics.
+      </p>
+      <h1>
+        GET 
+        <code>/api/topics/:topic/articles</code>
+      </h1>
+      <p>
+       Return all the articles for a certain topic
+      </p>
+      <h1>
+        POST 
+        <code>/api/topics/:topic/articles</code>
+      </h1>
+      <p>
+       Posts an article linked to a certain topic
+      </p>
+  </div>
+  <div class="articles">
+  <h1>
+    GET 
+    <code>/api/articles</code>
+  </h1>
+  <p>
+    Gets all articles.
+  </p>
+  <h1>
+    GET 
+    <code>/api/articles/:article_id/comments</code>
+  </h1>
+  <p>
+      Get all the comments for a individual article
+  </p>
+  <h1>
+    GET 
+    <code>/api/articles/:article_id</code>
+  </h1>
+  <p>
+      Get an article by its ID.
+  </p>
+  <h1>
+    POST 
+    <code>/api/articles/:article_id/comments</code>
+  </h1>
+  <p>
+      Post a comment linked to a particular article
+  </p>
+  <h1>
+    PUT
+    <code>/api/articles/:article_id</code>
+  </h1>
+  <p>
+    Increment or Decrement the votes of an article by one. This route requires a vote query of 'up' or 'down' via a query string<br>
+    e.g:<code>/api/articles/:article_id?vote=up</code> 
+  </p>
+  </div>
+  <div class="comments">
+    <h1>
+      GET 
+      <code>/api/comments</code>
+    </h1>
+    <p>
+        Gets all comments
+      </p>
+    <h1>
+      PUT 
+      <code>/api/comments/:comment_id</code>
+    </h1>
+    <p>
+      Increment or Decrement the votes of a comment by one. This route requires a vote query of 'up' or 'down'<br>
+      e.g: <code>/api/comments/:comment_id?vote=down</code>
+      </p>
+    <h1>
+      DELETE 
+      <code>/api/comments/:comment_id</code>
+    </h1>
+    <p>
+      Deletes a comment
+      </p>
+  </div>
+  <div class="users">
+    <h1>
+      GET
+      <code>/api/users</code>
+    </h1>
+    <p>
+      Gets all users
+    </p>
+    <h1>
+      GET
+      <code>/api/users/:user_id</code>
+    </h1>
+    <p>
+      Returns a JSON object with the profile data for the specified user.
+    </p>
+  </div>
+</body>
+</html>
