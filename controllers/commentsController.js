@@ -11,4 +11,18 @@ const sendAllComments = (req,res,next) => {
   })
 }
 
-module.exports = {sendAllComments};
+const deleteACommentById = (req,res,next) => {
+  const {comment_id} = req.params;
+  console.log(comment_id) 
+  Comments.findOne({_id: comment_id})
+  .then(comment => {
+    console.log(`comment with id ${comment_id} removed!`)
+    res.rend({comment})
+  })
+  .catch(err => {
+    if(err) next(err);
+  })
+}
+
+
+module.exports = {sendAllComments, deleteACommentById};
