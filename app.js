@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const DB_URL = require('./config');
+const DB_URL = process.env.NODE_ENV ? process.env.DB_URL : require('./config');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const apiRouter = require('./routes/api');
