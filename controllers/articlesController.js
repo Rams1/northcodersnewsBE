@@ -57,4 +57,40 @@ const receiveCommentByArticleById = (req,res,next) => {
     })
 }
 
-module.exports = {sendAllArticles,sendCommentsByArticleId, sendArticleById,receiveCommentByArticleById};
+const incrementArticleVoteCount = (req,res,next) => {
+  const {article_id} = req.params;
+  const {vote} = req.query;
+  if(vote === "up"){
+    Articles.findOneAndUpdate({_id: article_id},{$inc: {votes: 1}
+    })
+    .then(article => {
+      console.log(`article ${article_id} has been up voted 👍`)
+      res.statusCode = 202;
+      res.send({article});
+    })
+    .catch(err => {
+      if(err.name === 'CastError') next({status: 404})
+      else next(err);
+    }) 
+  }else{
+    Articles.findOneAndUpdate({_id: article_id},{$inc:{votes: -1}
+    })
+    .then(article => {
+      console.log(`article ${article_id} has been down voted 👎`)
+      res.statusCode = 202;
+      res.send({article});
+    })
+    .catch(err => {
+      if(err.name === 'CastError') next({status: 404})
+      else next(err);
+    })
+  }
+}
+
+module.exports = {
+  sendAllArticles,
+  sendCommentsByArticleId,
+  sendArticleById,
+  receiveCommentByArticleById,
+  incrementArticleVoteCount
+};
