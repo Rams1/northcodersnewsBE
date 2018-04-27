@@ -33,6 +33,7 @@ describe('/api', () => {
         .get(`/api/topics/${topicDocs[0]._id}/articles`)
         .expect(200)
         .then(({ body: { articles } }) => {
+          console.log(articles)
           expect(articles).to.be.an('array');
           expect(articles.length).to.equal(2);
           expect(articles[0].title).to.equal('Living in the shadow of a great man');
@@ -85,6 +86,69 @@ describe('/api', () => {
           expect(comments[0].body).to.equal("hello my name is Slim Shady");
         });
     });
+    it('Should be 404 on an invalid endpoint. ', () => {
+      return request
+        .get('/api/comment')
+        .expect(404)
+    });
+    it('Should return an article object of the accepted post.', () => {
+      return request
+        .post(`/api/articles/${articleDocs[0]._id}/comments`)
+        .expect(201)
+        .send(
+          {
+          "body": "I love eating cheese cake !!!!!!",
+          "created_by": "5ae1fa785bd819c8147143ad"
+          }
+        )
+        .then(({ body: { comment } }) => {
+          expect(comment.body).to.equal("I love eating cheese cake !!!!!!");
+          expect(comment.belongs_to).to.equal(`${articleDocs[0]._id}`);
+        });
+    });
+    it('Should be 400 on an invalid request. ', () => {
+      return request
+        .post(`/api/articles/${articleDocs[0]._id}/comments`)
+        .expect(400)
+        .send({
+          bo: "I love eating cheese cake !!!!!!",
+          "created_by": "5ae1fa785bd819c8147143ad"
+          })
+    });
+    it('Should delete a comment by comment id', () => {
+        return request
+        .delete(`/api/comments/${commentDocs[0]._id}`)
+        .expect(202)
+        .then(({body: { comment } }) => {
+          expect(comment).to.equal(`${commentDocs[0]._id}`);
+        });
+    });
+    it('Should be 404 on an invalid endpoint. ', () => {
+      return request
+        .delete(`/api/articles/450982908`)
+        .expect(404)
+    });
+    it('Should be 404 on an invalid endpoint. ', () => {
+      return request
+        .get(`/api/comments/450984905`)
+        .expect(404)
+    });
+    it('should increment comment vote count', () => {
+      return request
+        .put(`/api/comments/${commentDocs[0]._id}?vote=up`)
+        .expect(202)
+        .then(({ body: { comment } }) => {
+          expect(comment.votes).to.equal(7);
+        });
+    });
+    it('should decrement comment vote count', () => {
+      return request
+        .put(`/api/comments/${commentDocs[0]._id}?vote=down`)
+        .expect(202)
+        .then(({ body: { comment } }) => {
+          expect(comment.votes).to.equal(5);
+        });
+    });
   });
   describe('/articles 📖', () => {
     it('Should return an array with length 4, and array[0].title should be a string.', () => {
@@ -102,7 +166,9 @@ describe('/api', () => {
         .get(`/api/articles/${articleDocs[0]._id}`)
         .expect(200)
         .then(({ body: { article } }) => {
+          console.log(article)
           expect(article._id).to.equal(`${articleDocs[0]._id}`);
+          expect(article.commentCount).to.equal(6);
         });
     });
     it('should return comments related to a specific article', () => {
@@ -116,6 +182,27 @@ describe('/api', () => {
           expect(comments[5].belongs_to).to.equal(`${articleDocs[0]._id}`);
 
         });
+    });
+    it('should increment article vote count', () => {
+      return request
+        .put(`/api/articles/${articleDocs[0]._id}?vote=up`)
+        .expect(202)
+        .then(({ body: { article } }) => {
+          expect(article.votes).to.equal(6);
+        });
+    });
+    it('should decrement article vote count', () => {
+      return request
+        .put(`/api/articles/${articleDocs[0]._id}?vote=down`)
+        .expect(202)
+        .then(({ body: { article } }) => {
+          expect(article.votes).to.equal(4);
+        });
+    });
+    it('Should be status code 400 on an invalid request. ', () => {
+      return request
+        .put(`/api/articles/${articleDocs[0]._id}?vote=sr`)
+        .expect(400)
     });
   });
 });

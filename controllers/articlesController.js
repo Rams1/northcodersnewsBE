@@ -44,8 +44,8 @@ const sendArticleById = (req,res,next) => {
   })
   .then(([count,article]) => {
     const {votes,_id,title,body,belongs_to,created_by} = article;
-    res.send(
-      {
+    res.send({
+      article : {
         _id,
         title,
         votes,
@@ -53,7 +53,7 @@ const sendArticleById = (req,res,next) => {
         belongs_to,
         created_by,
         commentCount: count 
-      })
+      }})
   })
   .catch(err => {
     if(err.name === 'CastError') next({status: 404})
