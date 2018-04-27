@@ -8,7 +8,7 @@ const sendAllTopics = (req, res, next) => {
       res.send({ topics })
     })
     .catch(err => {
-      if (err) next(err);
+      if(err) next(err);
     })
 }
 
@@ -40,7 +40,8 @@ const receiveArticleByTopicId = (req, res, next) => {
       res.send({ article })
     })
     .catch(err => {
-      if (err) console.log(err);
+      if(err.name === 'ValidationError') next({status: 400})
+      else next(err);
     })
 }
 

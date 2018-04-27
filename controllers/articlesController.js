@@ -3,12 +3,22 @@ const Articles = require('../models/articles');
 const Comments = require('../models/comments');
 
 const sendAllArticles = (req,res,next) => {
-  Articles.find()
-  .then( (articles )=> {
+  Articles.find().lean()
+  .then(articles => {
+    const arrOfCounts = articles.map(article => {
+      return Comments.find({"belongs_to": article._id}).count()
+    })
+    return Promise.all([articles,...arrOfCounts]);
+  })
+  .then( ([articles,...arrOfCommentsCounts] )=> {
+       articles.forEach( (article,index) => {
+         article.commentCount = arrOfCommentsCounts[index];
+    })
     res.send({articles})
   })
   .catch(err => {
-    if(err) next(err);
+    if(err.name === 'CastError') next({status: 404})
+    else next(err);
   })
 }
 
@@ -27,8 +37,23 @@ const sendCommentsByArticleId = (req,res,next) => {
 const sendArticleById = (req,res,next) => {
   const {article_id} = req.params;
   Articles.findOne({"_id": article_id})
-  .then(article => {
-    res.send({article});
+  .populate('topics','slug')
+  .populate('users','username')
+  .then((article) => {
+    return Promise.all([Comments.find({"belongs_to": article_id}).count(),article])
+  })
+  .then(([count,article]) => {
+    const {votes,_id,title,body,belongs_to,created_by} = article;
+    res.send(
+      {
+        _id,
+        title,
+        votes,
+        body,
+        belongs_to,
+        created_by,
+        commentCount: count 
+      })
   })
   .catch(err => {
     if(err.name === 'CastError') next({status: 404})
@@ -53,7 +78,8 @@ const receiveCommentByArticleById = (req,res,next) => {
       res.send({comment});
     })
     .catch(err => {
-      if (err) console.log(err);
+      if(err.name === 'ValidationError') next({status: 400})
+      else next(err);
     })
 }
 
@@ -62,28 +88,32 @@ const incrementArticleVoteCount = (req,res,next) => {
   const {vote} = req.query;
   if(vote === "up"){
     Articles.findOneAndUpdate({_id: article_id},{$inc: {votes: 1}
-    })
+    },{new:true})
     .then(article => {
       console.log(`article ${article_id} has been up voted 👍`)
       res.statusCode = 202;
       res.send({article});
     })
     .catch(err => {
-      if(err.name === 'CastError') next({status: 404})
-      else next(err);
+      if(err.name === 'CastError') return next({status: 400})
+      else return next(err);
     }) 
-  }else{
-    Articles.findOneAndUpdate({_id: article_id},{$inc:{votes: -1}
-    })
+  }
+  else if(vote === "down"){
+    Articles.findOneAndUpdate({_id: article_id},{$inc:{votes: -1}},{new:true}
+    )
     .then(article => {
       console.log(`article ${article_id} has been down voted 👎`)
       res.statusCode = 202;
       res.send({article});
     })
     .catch(err => {
-      if(err.name === 'CastError') next({status: 404})
-      else next(err);
+      if(err.name === 'CastError') return next({status: 400})
+      else return next(err);
     })
+  }
+  else{
+    return next({status: 400}) 
   }
 }
 
