@@ -3,7 +3,8 @@ const Comments = require('../models/comments');
 
 const sendAllComments = (req,res,next) => {
   Comments.find()
-  .populate('belongs_to')
+  .populate('belongs_to','title')
+  .populate('created_by','username')
   .then( comments => {
     res.send({comments})
   })
@@ -46,6 +47,8 @@ const incrementCommentById = (req,res,next) => {
   }else{
     Comments.findOneAndUpdate({_id: comment_id},{$inc:{votes: -1}},{new:true}
     )
+    .populate('belongs_to','title')
+    .populate('created_by','username')
     .then(comment => {
       console.log(`comment ${comment_id} has been down voted 👎`)
       res.statusCode = 202;

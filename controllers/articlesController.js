@@ -4,6 +4,8 @@ const Comments = require('../models/comments');
 
 const sendAllArticles = (req,res,next) => {
   Articles.find().lean()
+  .populate('belongs_to','slug')
+  .populate('created_by','username')
   .then(articles => {
     const arrOfCounts = articles.map(article => {
       return Comments.find({"belongs_to": article._id}).count()
@@ -25,6 +27,8 @@ const sendAllArticles = (req,res,next) => {
 const sendCommentsByArticleId = (req,res,next) => {
   const {article_id} = req.params;
   Comments.find({"belongs_to": article_id})
+  .populate('belongs_to','title')
+  .populate('created_by','username')
   .then(comments => {
     res.send({comments})
   })
@@ -37,8 +41,8 @@ const sendCommentsByArticleId = (req,res,next) => {
 const sendArticleById = (req,res,next) => {
   const {article_id} = req.params;
   Articles.findOne({"_id": article_id})
-  .populate('topics','slug')
-  .populate('users','username')
+  .populate('belongs_to','slug')
+  .populate('created_by','username')
   .then((article) => {
     return Promise.all([Comments.find({"belongs_to": article_id}).count(),article])
   })
