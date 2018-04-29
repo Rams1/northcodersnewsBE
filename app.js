@@ -16,6 +16,10 @@ app.set("view-engine", "ejs");
 app.use(bodyParser.json());
 app.use('/api', apiRouter);
 
+app.get('/', (req, res, next) => {
+  res.render('pages/index.ejs');
+})
+
 //Error Handling
 app.use('/*', (req, res, next) => {next({status: 404})});
 

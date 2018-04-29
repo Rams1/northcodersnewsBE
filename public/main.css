@@ -37,3 +37,30 @@ code {
 p {
   margin-left: 10px;
 }
+
+/* landing page  */
+
+.indexPage {
+
+  text-align: center;
+}
+
+.titleFront {
+  padding: 100pt;
+  padding-bottom: 10pt;
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-size: 40pt;
+}
+
+/* button mainpage */
+
+.button {
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-size: 14pt;
+  padding-bottom: 30px;
+}
+
+button, input, select, textarea {
+  font-family : inherit;
+  font-size   : 100%;
+}
