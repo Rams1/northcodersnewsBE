@@ -3,20 +3,17 @@
 A simple api app that serves up information from a mongoDB.
 
 
-## Getting Started
+# Getting Started
 
-The following npm packages are required:
+## Clone the files from the github Repository
 ```
-npm install -D
+https://github.com/Rams1/BE-FT-northcoders-news.git
 ```
-express,
-mongoose,
-chai,
-mocha,
-nodemon,
-ejs,
-supertest
+## Install the npm package dependencies:
 
+```
+npm install 
+```
 
 ### Setup
 
@@ -26,7 +23,7 @@ Please create a config file containing the following files;
 development.js
 ```
 
-this file will contain the url to your development database within mongo eg.
+This file will contain the url to your development database within mongo eg.
 mongodb://localhost:27017/devData. Please make sure youre exporting this url as a string from this file.
 
 ```
@@ -37,7 +34,7 @@ This file will contain a string url to your test database eg mongodb://localhost
 ```
 index.js
 ```
-This file will contain a constant path which will set path to either the value of the process.env.NODE_ENV key or the string, development.
+This file will contain a constant, which will set path to either the value of the process.env.NODE_ENV key or the string, "development".
  module.exports must be used to require in the file path and immidiately export it, the path will be a template literal using the constant declared at the start  .eg
 
 ```
@@ -50,10 +47,10 @@ production.js
 This file will contain your url to the mlab database you need to set up.
 again, make sure you module.exports the url.
 
-```
-app setup;
-```
-everything is now ready to go regarding the app. now we have to setup  the mlab database and the heroku app.
+
+# App set-up;
+
+everything is now ready to go regarding the app. now we have to setup the Mlab database and the heroku app.
 
 
 ```
@@ -111,8 +108,8 @@ https://devcenter.heroku.com/articles/git#prerequisites-install-git-and-the-hero
 * Henry
 * Nick
 
-##  Link to Heroku Hosted app
+##  Link to Heroku Hosted app with available endpoints.
 
 ```
-https://northcoders-news1.herokuapp.com/
+https://northcoders-news1.herokuapp.com/api
 ```
