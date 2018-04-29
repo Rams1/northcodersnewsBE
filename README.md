@@ -111,5 +111,5 @@ https://devcenter.heroku.com/articles/git#prerequisites-install-git-and-the-hero
 ##  Link to Heroku Hosted app with available endpoints.
 
 ```
-https://northcoders-news1.herokuapp.com/api
+https://northcoders-news1.herokuapp.com
 ```
