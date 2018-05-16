@@ -1,18 +1,19 @@
-# Northcoder News Api
+# Northcoders News Api
 
-A simple api app that serves up information from a mongoDB.
-
+An Api that accepts GET, POST ,PUT and DELETE Requests
 
 # Getting Started
 
 ## Clone the files from the github Repository
+
 ```
 https://github.com/Rams1/BE-FT-northcoders-news.git
 ```
+
 ## Install the npm package dependencies:
 
 ```
-npm install 
+npm install
 ```
 
 ### Setup
@@ -29,13 +30,15 @@ mongodb://localhost:27017/devData. Please make sure youre exporting this url as 
 ```
 test.js
 ```
+
 This file will contain a string url to your test database eg mongodb://localhost:27017/devData_test .. again make sure you are using module.exports to export the string.
 
 ```
 index.js
 ```
+
 This file will contain a constant, which will set path to either the value of the process.env.NODE_ENV key or the string, "development".
- module.exports must be used to require in the file path and immidiately export it, the path will be a template literal using the constant declared at the start  .eg
+module.exports must be used to require in the file path and immidiately export it, the path will be a template literal using the constant declared at the start .eg
 
 ```
 module.exports = require(`./${path}`)
@@ -43,49 +46,50 @@ module.exports = require(`./${path}`)
 
 ```
 production.js
-``` 
+```
+
 This file will contain your url to the mlab database you need to set up.
 again, make sure you module.exports the url.
-
 
 # App set-up;
 
 everything is now ready to go regarding the app. now we have to setup the Mlab database and the heroku app.
 
-
 ```
 MLAB Setup
 ```
 
-## follow the documention below to help setup your mlab database 
+## follow the documention below to help setup your mlab database
 
 ```
 https://docs.mlab.com/
 ```
+
 ```
 Hosting on Heroku
-````
+```
+
 next we have to join heroku, where we can deploy the api;
 
-### Sign up to heroku @ heroku.com 
+### Sign up to heroku @ heroku.com
 
 Once you have an account and have linked it to your github account, you are ready to deploy onto heroku.
 
 ```
-npm run prod-dev 
+npm run prod-dev
 ```
+
 This command will seed your mlab database.
 
 ```
 install Heroku npm package
 ```
+
 Follow the link to set up heroku in node.js
+
 ```
 https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
 ```
-
-
-
 
 ```
 Deploying api onto Heroku
@@ -108,7 +112,7 @@ https://devcenter.heroku.com/articles/git#prerequisites-install-git-and-the-hero
 * Henry
 * Nick
 
-##  Link to Heroku Hosted app with available endpoints.
+## Link to Heroku Hosted app with available endpoints.
 
 ```
 https://northcoders-news1.herokuapp.com

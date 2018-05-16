@@ -40,7 +40,7 @@ describe('/api', () => {
           expect(articles[1].body).to.equal(`Who are we kidding, there is only one, and it's Mitch!`);
         });
     });
-    it('Should return an article object of the accepted post.', () => {
+    it.only('Should return an article object of the accepted post.', () => {
       return request
         .post(`/api/topics/${topicDocs[0]._id}/articles`)
         .expect(201)
@@ -139,6 +139,7 @@ describe('/api', () => {
         .expect(202)
         .then(({ body: { comment } }) => {
           expect(comment.votes).to.equal(7);
+          //equal(commentDocs[0].votes + 1)
         });
     });
     it('should decrement comment vote count', () => {
@@ -200,6 +201,7 @@ describe('/api', () => {
         });
     });
     it('Should be status code 400 on an invalid request. ', () => {
+      // change test to show gibberish is ignored, only up and down is processed. 
       return request
         .put(`/api/articles/${articleDocs[0]._id}?vote=sr`)
         .expect(400)
