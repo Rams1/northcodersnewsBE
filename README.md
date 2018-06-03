@@ -1,119 +1,64 @@
-# Northcoders News Api
+# nortcoders-news
 
-An Api that accepts GET, POST ,PUT and DELETE Requests
+A functioning API using MongoDB as the database, to give you the latest Northcoders news.
 
-# Getting Started
+You can view the function API at https://northcoders-new1.herokuapp.com
 
-## Clone the files from the github Repository
+## Getting Started
 
-```
-https://github.com/Rams1/BE-FT-northcoders-news.git
-```
+Fork and clone this repo onto your local drive and ensure Node.js is installed.
 
-## Install the npm package dependencies:
+### Prerequisites
 
-```
-npm install
-```
+Once Node.js is installed run npm i to install all required files
 
-### Setup
+### Installing
 
-Please create a config file containing the following files;
-
-```
-development.js
+```sh
+git clone https://github.com/{your-username}/northcodersnewsBE.git
+npm i
 ```
 
-This file will contain the url to your development database within mongo eg.
-mongodb://localhost:27017/devData. Please make sure youre exporting this url as a string from this file.
+## Running the tests
 
-```
-test.js
-```
+To run the tests run the following command
 
-This file will contain a string url to your test database eg mongodb://localhost:27017/devData_test .. again make sure you are using module.exports to export the string.
-
-```
-index.js
+```sh
+npm t
 ```
 
-This file will contain a constant, which will set path to either the value of the process.env.NODE_ENV key or the string, "development".
-module.exports must be used to require in the file path and immidiately export it, the path will be a template literal using the constant declared at the start .eg
+### Testing
 
-```
-module.exports = require(`./${path}`)
-```
+The tests are to check that the endpoints are retrieving the correct data, and that the controllers are working correctly
 
-```
-production.js
-```
-
-This file will contain your url to the mlab database you need to set up.
-again, make sure you module.exports the url.
-
-# App set-up;
-
-everything is now ready to go regarding the app. now we have to setup the Mlab database and the heroku app.
-
-```
-MLAB Setup
-```
-
-## follow the documention below to help setup your mlab database
-
-```
-https://docs.mlab.com/
-```
-
-```
-Hosting on Heroku
-```
-
-next we have to join heroku, where we can deploy the api;
-
-### Sign up to heroku @ heroku.com
-
-Once you have an account and have linked it to your github account, you are ready to deploy onto heroku.
-
-```
-npm run prod-dev
-```
-
-This command will seed your mlab database.
-
-```
-install Heroku npm package
-```
-
-Follow the link to set up heroku in node.js
-
-```
-https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
-```
-
-```
-Deploying api onto Heroku
+```sh
+describe('/api/comments', () => {
+        it('PUT /api/comments/:comment_id?vote=up', () => {
+            const votes = comments[0].votes
+            return request
+            .put(`/api/comments/${comments[0]._id}?vote=up`)
+            .expect(200)
+            .then(result => {
+                expect(result.body.comment.votes).to.equal(votes + 1)
+            })
+        })
 ```
 
 ## Deployment
 
-Now that heroku has been linked to your github if you git commit and push to github, heroku can access this new version..
-
-follow the link below to deploy in heroku
-
-```
-https://devcenter.heroku.com/articles/git#prerequisites-install-git-and-the-heroku-cli
+```sh
+npm run dev
 ```
 
-## Acknowledgments
+You should now be running on [localhost:9090](http://localhost:9090/)
 
-* Thanks to northcoders
-* Mike
-* Henry
-* Nick
+## Built With
 
-## Link to Heroku Hosted app with available endpoints.
+* [MongoDB](https://www.mongodb.com/) - The database.
+* [Heroku](https://dashboard.heroku.com/) - The hosting website for the application.
+* [MLAB](https://mlab.com/home) - The hosting website for the database.
+* [Node](https://nodejs.org/en/) - The language used to write the app
 
-```
-https://northcoders-news1.herokuapp.com
-```
+## Author
+
+** Ramsey Mahgoub ** - _work_ - [Rams1](https://github.com/Rams1)
